@@ -1,0 +1,6 @@
+@CurrencyConversionToWordsMicroservice_HostAddress = http://localhost:5195
+
+GET {{CurrencyConversionToWordsMicroservice_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
