@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddScoped<INumberToWordConverterHandler, NumberToWordConverterHandler>();
+builder.Services.AddScoped<INumbersToWordsConverterHandler, NumbersToWordsConverterHandler>();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IValidator<double>, CurrencyValidator>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

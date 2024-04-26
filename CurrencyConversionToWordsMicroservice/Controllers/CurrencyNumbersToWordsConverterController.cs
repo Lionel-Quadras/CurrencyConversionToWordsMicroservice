@@ -6,22 +6,22 @@ namespace CurrencyConversionToWordsMicroservice.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CurrencyNumberToWordConverterController : ControllerBase
+    public class CurrencyNumberToWordsConverterController : ControllerBase
     {
+        private readonly ILogger<CurrencyNumberToWordsConverterController> _logger;
+        private readonly INumbersToWordsConverterHandler _numberToWordConverterHandler;
 
-        private readonly ILogger<CurrencyNumberToWordConverterController> _logger;
-        private readonly INumberToWordConverterHandler _numberToWordConverterHandler;
-
-        public CurrencyNumberToWordConverterController(ILogger<CurrencyNumberToWordConverterController> logger, INumberToWordConverterHandler numberToWordConverterHandler)
+        public CurrencyNumberToWordsConverterController(ILogger<CurrencyNumberToWordsConverterController> logger, INumbersToWordsConverterHandler numberToWordConverterHandler)
         { 
             _logger = logger;
             _numberToWordConverterHandler = numberToWordConverterHandler;
         }
 
         [HttpGet("{amount}")]
-        public IActionResult Get(double amount, [FromServices]  IValidator<double> validator)
+        public IActionResult AmountInWords(double amount, [FromServices]  IValidator<double> validator)
         {
             _logger.LogInformation("Amount: {}", amount);
+            //to check whether data is valid or not
             var validationResult = validator.Validate(amount);
             if (!validationResult.IsValid)
             {
@@ -30,8 +30,11 @@ namespace CurrencyConversionToWordsMicroservice.Controllers
                 {
                     errorList.Add(errors.ErrorMessage);
                 }
+                //invalid data throw bad request
                 return BadRequest(errorList);
             }
+
+            //Calling Handler to convert number into words.
             return Ok(new { amount = _numberToWordConverterHandler.Handle(amount) });
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace CurrencyConversionToWordsMicroservice.Handler
 {
-    public interface INumberToWordConverterHandler
+    public interface INumbersToWordsConverterHandler
     {
         string Handle(double amount);
     }
